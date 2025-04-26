@@ -1,0 +1,11 @@
+__pycache__/
+.vscode/
+.env
+Thumbs.db
+desktop.ini
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
