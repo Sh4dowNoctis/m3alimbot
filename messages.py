@@ -51,4 +51,4 @@ reactions = ["https://images-ext-1.discordapp.net/external/Cy3ugvgCm5_vWe8NhmUKj
              "https://images-ext-1.discordapp.net/external/BSxLOsRodxnN0dJDgdEe7Jgu1g_1DqdgWUZ12-dZ4Jo/https/media.tenor.com/ZmVzlk5kKuUAAAPo/among-us-sus.mp4"];
 
 def jeffReactions(message):
-    return message.channel.send(random.choice(reactions))
+    return message.channel.send(content=random.choice(reactions))
