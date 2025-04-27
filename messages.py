@@ -38,6 +38,8 @@ def goofyAnswers(user_message_lower, message):
     elif user_message_lower.endswith("quoi"):
         return message.channel.send("feur")
     
+    elif user_message_lower.endswith("no"):
+        return message.channel.send("vembre")
     else:
         return asyncio.sleep(0)
 
