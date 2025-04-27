@@ -5,6 +5,7 @@ import asyncio
 from discord import Intents, Client, Message
 from discord.ext import commands
 from messages import goofyAnswers, jeffReactions
+from keep_alive import keep_alive
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -42,6 +43,7 @@ async def on_message(message):
 
 # bot = commands.Bot(command_prefix="!")
 def main():
+    keep_alive()
     client.run(TOKEN)
 
 if __name__ == '__main__':
