@@ -14,6 +14,7 @@ intents = Intents.default()
 intents.message_content = True 
 client = Client(intents=intents)
 
+my_id = 411654562819211275
 jeff_id = 532728104322465815
 
 @client.event

@@ -1,7 +1,8 @@
 import asyncio
 import random
+import discord
 
-def goofyAnswers(user_message_lower, message):
+async def goofyAnswers(user_message_lower, message):
     if user_message_lower.endswith("di"):
         return message.channel.send("manche")
 
@@ -43,12 +44,20 @@ def goofyAnswers(user_message_lower, message):
     else:
         return asyncio.sleep(0)
 
-reactions = ["https://images-ext-1.discordapp.net/external/Cy3ugvgCm5_vWe8NhmUKjnb6MoG8uOw2hWChqdknaJ0/https/media.tenor.com/pwQ4AsLMau0AAAPo/discord-mod-speech-bubble.mp4",
-             "https://images-ext-1.discordapp.net/external/I_-meTJXqDyG3n7lZrK8OgSBaKt6pNYWfOgzkWKRmSY/https/media.tenor.com/e2eT7Zn_pYYAAAPo/snowman-mewing.mp4",
-             "https://images-ext-1.discordapp.net/external/1cWJUtUPTzxgZN8gG6p0QjA7mPswSqmZQhrQrAEfNHA/https/media.tenor.com/b7mnVHUXvsAAAAPo/speech-bubble-ishowspeed.mp4",
-             "https://images-ext-1.discordapp.net/external/VrkN3D77_xdrKFiDZnewFbGSrRkZLRe3RmwvvENM2qk/https/media.tenor.com/pPd2u3Q-5_UAAAPo/dentedhead-speech-bubble.mp4",
-             "https://media.discordapp.net/attachments/807641026188542014/1349129359771959318/yea_man.gif?ex=67d1fa20&is=67d0a8a0&hm=898c83a3f0c6341044edaf26c81ab4ac01a26ffd1d07066e35b0704ca1712abb&=&width=540&height=525",
-             "https://images-ext-1.discordapp.net/external/BSxLOsRodxnN0dJDgdEe7Jgu1g_1DqdgWUZ12-dZ4Jo/https/media.tenor.com/ZmVzlk5kKuUAAAPo/among-us-sus.mp4"];
+reactions = [   "https://tenor.com/view/snowman-mewing-speech-bubble-discord-mod-gif-8892238637966534022",
+                "https://tenor.com/view/speech-bubble-ishowspeed-scream-gif-25326093",
+                "https://tenor.com/view/dentedhead-speech-bubble-hldmbrnet-gif-25216740",
+                "https://tenor.com/view/dentedhead-speech-bubble-hldmbrnet-gif-25216740",
+                "https://tenor.com/view/among-us-sus-discord-speech-bubble-among-us-discord-speech-bubble-ok-man-gif-7378430653913901797",
+                "https://tenor.com/view/discord-mod-speech-bubble-gif-12034805688750074605"];
 
-def jeffReactions(message):
-    return message.channel.send(content=random.choice(reactions))
+async def jeffReactions(message):
+    media = random.choice(reactions)
+    
+    if media.endswith(('.png', '.jpg', '.jpeg', '.gif')):
+        embed = discord.Embed()
+        embed.set_image(url=media)
+        await message.channel.send(embed=embed)
+    else:
+        await message.channel.send(content=media)
+
