@@ -2,7 +2,7 @@ import asyncio
 import random
 import discord
 
-async def goofyAnswers(user_message_lower, message):
+def goofyAnswers(user_message_lower, message):
     if user_message_lower.endswith("di"):
         return message.channel.send("manche")
 
