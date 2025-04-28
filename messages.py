@@ -51,13 +51,46 @@ reactions = [   "https://tenor.com/view/snowman-mewing-speech-bubble-discord-mod
                 "https://tenor.com/view/among-us-sus-discord-speech-bubble-among-us-discord-speech-bubble-ok-man-gif-7378430653913901797",
                 "https://tenor.com/view/discord-mod-speech-bubble-gif-12034805688750074605"];
 
-async def jeffReactions(message):
-    media = random.choice(reactions)
-    
-    if media.endswith(('.png', '.jpg', '.jpeg', '.gif')):
-        embed = discord.Embed()
-        embed.set_image(url=media)
-        await message.channel.send(embed=embed)
-    else:
-        await message.channel.send(content=media)
+Haerin = "https://tenor.com/view/haerin-newjeans-newjeans-haerin-haerin-react-kang-haerin-gif-11086638272767305507"
+Chaewon = "https://tenor.com/view/chaewon-le-sserafim-kpop-pretty-gif-4861479788048137214"
+kidLooking = "https://tenor.com/view/awkward-look-away-gif-5084935"
+magesty = "https://tenor.com/view/kneel-down-my-queen-your-majesty-gif-17663021"
+getthisN = "https://cdn.discordapp.com/attachments/576672116561281034/1358634299129331722/getthisniggaout.gif"
 
+# Jifo Haerin gif + goofy ahh gifs
+async def jeffReaction(message):
+        if (message.content == getthisN):
+            await message.channel.send("nuh uh")
+        if ("haerin" in message.content.lower()):
+            await message.channel.send(kidLooking)
+        else:
+            if random.random() < 0.05:
+                await message.channel.send(Haerin)
+            elif random.random() < 0.25:
+                await message.channel.send(random.choice(reactions))
+
+
+# Matteo Chaewon gif
+async def matteoReaction(message):
+    if ("chaewon" in message.content.lower()):
+        await message.channel.send(kidLooking)
+    else:
+        if random.random() < 0.05:
+            await message.channel.send(Chaewon)
+
+# Yara et Lea emoji and gif reaction
+async def yaraAndLeaReaction(message):
+    if random.random() < 0.5:
+            emojis = ['💀', '🤡', '👑', '🫦']
+            weights = [85, 10, 4.9, 0.1]
+            chosen_emojis = random.choices(emojis, weights=weights, k=1)
+
+            for emoji in chosen_emojis:
+                await message.add_reaction(emoji)
+
+    if random.random() < 0.15:
+        await message.channel.send(magesty)
+
+async def ramiReaction(message):
+    if random.random() < 0.35:
+        await message.channel.send("beh ich")

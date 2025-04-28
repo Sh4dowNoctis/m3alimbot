@@ -4,7 +4,8 @@ import discord
 import asyncio
 from discord import Intents, Client, Message
 from discord.ext import commands
-from messages import goofyAnswers, jeffReactions
+import random
+from messages import goofyAnswers, jeffReaction, matteoReaction,  yaraAndLeaReaction, ramiReaction
 from keep_alive import keep_alive
 
 load_dotenv()
@@ -16,6 +17,10 @@ client = Client(intents=intents)
 
 my_id = 411654562819211275
 jeff_id = 532728104322465815
+yara_id = 1314032768543359069
+lea_id = 765228868671242250
+matteo_id = 437187631009234944
+rami_id = 342008936960098305
 
 @client.event
 async def on_ready():
@@ -27,7 +32,17 @@ async def on_message(message):
         return
     
     if message.author.id == jeff_id:
-        await jeffReactions(message)
+        await jeffReaction(message)
+
+    if message.author.id == matteo_id:
+        await matteoReaction(message);
+
+    if message.author.id in [yara_id, lea_id]:
+        await yaraAndLeaReaction(message)
+
+    if message.author.id == rami_id:
+        await ramiReaction(message)
+
 
     username = str(message.author)
     user_message: str = message.content
