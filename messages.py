@@ -88,7 +88,7 @@ async def yaraAndLeaReaction(message):
             for emoji in chosen_emojis:
                 await message.add_reaction(emoji)
 
-    if random.random() < 0.15:
+    if random.random() < 0.05:
         await message.channel.send(magesty)
 
 async def ramiReaction(message):
