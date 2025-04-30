@@ -5,15 +5,16 @@ import asyncio
 from discord import Intents, Client, Message
 from discord.ext import commands
 import random
-from messages import goofyAnswers, jeffReaction, matteoReaction,  yaraAndLeaReaction, ramiReaction
+from messages import goofyAnswers, jeffReaction, matteoReaction,  yaraAndLeaReaction, ramiReaction, myReaction
 from keep_alive import keep_alive
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 intents = Intents.default()
-intents.message_content = True 
-client = Client(intents=intents)
+intents.message_content = True
+
+bot = commands.Bot(command_prefix="m3alim ", intents=intents)
 
 my_id = 411654562819211275
 jeff_id = 532728104322465815
@@ -22,15 +23,21 @@ lea_id = 765228868671242250
 matteo_id = 437187631009234944
 rami_id = 342008936960098305
 
-@client.event
+@bot.event
 async def on_ready():
-    print(f'{client.user} is now running')
+    print(f'{bot.user} is now running')
 
-@client.event
+@bot.event
 async def on_message(message):
-    if message.author == client.user:
+    # Always allow commands to be processed
+    await bot.process_commands(message)
+
+    # Ignore self
+    if message.author == bot.user:
         return
     
+
+    # User-specific reactions
     if message.author.id == jeff_id:
         await jeffReaction(message)
 
@@ -43,6 +50,9 @@ async def on_message(message):
     if message.author.id == rami_id:
         await ramiReaction(message)
 
+    if message.author.id == my_id:
+        await myReaction(message)
+
 
     username = str(message.author)
     user_message: str = message.content
@@ -50,17 +60,21 @@ async def on_message(message):
 
     print(f'[{channel}] {username} "{username}"')
 
-    user_message_lower = user_message.lower()
-    await goofyAnswers(user_message_lower, message)
+    await goofyAnswers(user_message.lower(), message)
     
 
-
+# Example command — you can add more like this
+@bot.command(name="chabeb")
+async def ping(ctx):
+    await ctx.send('🐈🚪')
+    await ctx.channel.last_message.add_reaction('🐈')
+    await ctx.channel.last_message.add_reaction('🚪')
 
 
 # bot = commands.Bot(command_prefix="!")
 def main():
     keep_alive()
-    client.run(TOKEN)
+    bot.run(TOKEN)
 
 if __name__ == '__main__':
     main()

@@ -5,6 +5,9 @@ import discord
 def goofyAnswers(user_message_lower, message):
     if user_message_lower.endswith("di"):
         return message.channel.send("manche")
+    
+    if user_message_lower.endswith("ni"):
+        return message.channel.send("gger")
 
     elif user_message_lower.endswith("toi"):
         return message.channel.send("lette")
@@ -23,6 +26,9 @@ def goofyAnswers(user_message_lower, message):
 
     elif user_message_lower.endswith("si"):
         return message.channel.send("fler")
+    
+    elif user_message_lower.endswith("lou"):
+        return message.channel.send("té")
 
     elif user_message_lower.endswith("ou"):
         return message.channel.send("blier")
@@ -94,3 +100,7 @@ async def yaraAndLeaReaction(message):
 async def ramiReaction(message):
     if random.random() < 0.35:
         await message.channel.send("beh ich")
+
+async def myReaction(message):
+    if message.content.lower().startswith("cha"):
+        await message.channel.send("beb")
