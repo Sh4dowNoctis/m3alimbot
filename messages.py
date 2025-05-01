@@ -1,6 +1,8 @@
 import asyncio
 import random
 import discord
+from discord import Message
+from main import bot
 
 def goofyAnswers(user_message_lower, message):
     if user_message_lower.endswith("di"):
@@ -101,6 +103,10 @@ async def ramiReaction(message):
     if random.random() < 0.35:
         await message.channel.send("beh ich")
 
-async def myReaction(message):
+async def myReaction(message: Message):
     if message.content.lower().startswith("cha"):
-        await message.channel.send("beb")
+        await message.add_reaction('🐈')
+        message_sent = await message.channel.send("beb")
+        if message_sent.author == bot.user:
+            await message_sent.add_reaction('🚪')
+        # await message.channel.send("beb")

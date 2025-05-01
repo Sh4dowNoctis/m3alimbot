@@ -1,12 +1,18 @@
+# -------------------- System Imports / APIs -------------------- #
 import os
-from dotenv import load_dotenv
-import discord
+import random
 import asyncio
+import requests
+import discord
 from discord import Intents, Client, Message
 from discord.ext import commands
-import random
+from dotenv import load_dotenv
+# -------------------- My imports -------------------- #
 from messages import goofyAnswers, jeffReaction, matteoReaction,  yaraAndLeaReaction, ramiReaction, myReaction
 from keep_alive import keep_alive
+from ids import *
+
+# -------------------- Startup -------------------- #
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -16,19 +22,19 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="m3alim ", intents=intents)
 
-my_id = 411654562819211275
-jeff_id = 532728104322465815
-yara_id = 1314032768543359069
-lea_id = 765228868671242250
-matteo_id = 437187631009234944
-rami_id = 342008936960098305
-
 @bot.event
 async def on_ready():
-    print(f'{bot.user} is now running')
+    id = random.randint(1000, 9999)
+    print(f"Bot started [ID: {id}] as {bot.user}")
+    channel = bot.get_channel(log_channel_id)
+    if channel:
+        await channel.send(f"🟢 Bot instance `{id}` started as **{bot.user}**")
+    
+
+# -------------------- Events -------------------- #
 
 @bot.event
-async def on_message(message):
+async def on_message(message: Message):
     # Always allow commands to be processed
     await bot.process_commands(message)
 
@@ -63,18 +69,31 @@ async def on_message(message):
     await goofyAnswers(user_message.lower(), message)
     
 
-# Example command — you can add more like this
+
+# -------------------- Commands -------------------- #
+
 @bot.command(name="chabeb")
-async def ping(ctx):
+async def chabeb(ctx):
     await ctx.send('🐈🚪')
     await ctx.channel.last_message.add_reaction('🐈')
     await ctx.channel.last_message.add_reaction('🚪')
 
+# -------------------- Future - Commands -------------------- #
+"""
+def purge(ctx, numberOfMessage, Author...)
 
-# bot = commands.Bot(command_prefix="!")
+def mockingLeBotDeJeffPuisDeleteSonLastMessage(message) MoCkInG jEFf BoT aNd Matteo
+
+def russianRoulette
+"""
+
+
+
+# -------------------- Main -------------------- #
 def main():
     keep_alive()
     bot.run(TOKEN)
 
 if __name__ == '__main__':
     main()
+
