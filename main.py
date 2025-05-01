@@ -3,6 +3,8 @@ import os
 import random
 import asyncio
 import requests
+import signal
+import sys
 import discord
 from discord import Intents, Client, Message
 from discord.ext import commands
@@ -11,6 +13,15 @@ from dotenv import load_dotenv
 from messages import goofyAnswers, jeffReaction, matteoReaction,  yaraAndLeaReaction, ramiReaction, myReaction
 from keep_alive import keep_alive
 from ids import *
+
+# -------------------- Clean Shutdown -------------------- #
+
+def handle_shutdown(sig, frame):
+    print("🛑 Shutdown signal received.")
+    bot.loop.create_task(bot.close())  # Let the bot exit gracefully
+
+signal.signal(signal.SIGINT, handle_shutdown)
+signal.signal(signal.SIGTERM, handle_shutdown)
 
 # -------------------- Startup -------------------- #
 

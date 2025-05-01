@@ -2,7 +2,8 @@ import asyncio
 import random
 import discord
 from discord import Message
-from main import bot
+from ids import m3alim_bob_id
+
 
 def goofyAnswers(user_message_lower, message):
     if user_message_lower.endswith("di"):
@@ -107,6 +108,5 @@ async def myReaction(message: Message):
     if message.content.lower().startswith("cha"):
         await message.add_reaction('🐈')
         message_sent = await message.channel.send("beb")
-        if message_sent.author == bot.user:
+        if message_sent.author.id == m3alim_bob_id:
             await message_sent.add_reaction('🚪')
-        # await message.channel.send("beb")
