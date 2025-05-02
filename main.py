@@ -5,11 +5,12 @@ import asyncio
 import requests
 import signal
 import sys
+import re
 import discord
 from discord import Intents, Client, Message
 from discord.ext import commands
 from dotenv import load_dotenv
-from db import init_db, increment_word
+from db.db import init_db, increment_word, get_word_count
 # -------------------- My imports -------------------- #
 from messages import goofyAnswers, jeffReaction, matteoReaction,  yaraAndLeaReaction, ramiReaction, myReaction
 from keep_alive import keep_alive
@@ -82,22 +83,24 @@ async def on_message(message: Message):
     await goofyAnswers(user_message.lower(), message)
 
 
-    nigga_words = ["nigga", "nigger", "niggers", "niggi", "nigg", "niga", "nga", "nick gurr", "nyaka" ]
+    nigga_words = [ "nigger", "niggers", "niggi", "nigg", "niga", "nga", "nick gurr", "nyaka" ]
     
     if user_message.lower().endswith("ni"):
         count = increment_word("nigga")
-        await message.channel.send(f"📈 The word nigga w l'chabibet has now been said {count} times!")
+        await message.channel.send(f"📈 The word nigga w l'chabibet has now been said {count} times!", delete_after=3)
         
     for word in nigga_words:
-        if word in user_message.lower():
+        pattern = r"\b" + re.escape(word) + r"\b"
+        if re.search(pattern, user_message, re.IGNORECASE) and "m3alim" not in user_message:
             count = increment_word("nigga")
-            await message.channel.send(f"📈 The word nigga w l'chabibet has now been said {count} times!")
+            await message.channel.send(f"📈 The word nigga w l'chabibet has now been said {count} times!", delete_after=3)
 
-    tracked_words = ["haerin", "chaewon", "chabeb", "based", "cho"]
+    tracked_words = ["haerin", "chaewon", "chabeb", "based", "cho", "nigga"]
     for word in tracked_words:
-        if word in user_message.lower():
+        pattern = r"\b" + re.escape(word) + r"\b"
+        if re.search(pattern, user_message, re.IGNORECASE) and "m3alim" not in user_message:
             count = increment_word(word)
-            await message.channel.send(f"📈 The word '{word}' has now been said {count} times!")
+            await message.channel.send(f"📈 The word {word} has now been said {count} times!", delete_after=3)
     
 
 
@@ -115,7 +118,6 @@ async def purge(ctx, number: int, *authors: discord.Member):
     """
     Purges the last `number` messages. If authors are specified, only deletes messages from them.
     """
-
     if number > 50:
         return
 
@@ -124,6 +126,17 @@ async def purge(ctx, number: int, *authors: discord.Member):
 
     deleted = await ctx.channel.purge(limit=number+1, check=check)
     await ctx.send(f"🧹 Deleted {len(deleted)-1} messages.", delete_after=3)
+    
+@bot.command(name="counter")
+async def counter(ctx: commands.context.Context, word):
+    if not word:
+        return
+    
+    tracked_words = ["haerin", "chaewon", "chabeb", "based", "cho", "nigga"]
+    if word in tracked_words:
+        count = get_word_count(word)
+        
+    await ctx.channel.send(f"📈 The word {word} has now been said {count} times!", delete_after=5)
 
 # -------------------- Future - Commands -------------------- #
 """

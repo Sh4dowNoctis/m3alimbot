@@ -11,3 +11,4 @@ env/
 .venv/
 *render.py
 check_db.py
+trash_db.py

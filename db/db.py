@@ -30,3 +30,10 @@ def increment_word(word: str) -> int:
             count = 1
             cur.execute("INSERT INTO word_counts (word, count) VALUES (%s, %s)", (word, count))
     return count
+
+def get_word_count(word: str) -> int:
+    word = word.lower()
+    with conn:
+        cur.execute("SELECT count FROM word_counts WHERE word = %s", (word,))
+        row = cur.fetchone()
+        return row[0] if row else 0
