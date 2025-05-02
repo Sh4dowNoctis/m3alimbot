@@ -5,7 +5,7 @@ from discord import Message
 from ids import m3alim_bob_id
 
 
-def goofyAnswers(user_message_lower, message):
+def goofyAnswers(user_message_lower: str, message):
     if user_message_lower.endswith("di"):
         return message.channel.send("manche")
     
@@ -15,7 +15,7 @@ def goofyAnswers(user_message_lower, message):
     elif user_message_lower.endswith("toi"):
         return message.channel.send("lette")
 
-    elif user_message_lower.endswith("1"):
+    elif user_message_lower.endswith("1") and "m3alim" not in user_message_lower:
         return message.channel.send("2")
 
     elif user_message_lower.endswith("chou"):
@@ -52,6 +52,8 @@ def goofyAnswers(user_message_lower, message):
         return message.channel.send("vembre")
     else:
         return asyncio.sleep(0)
+    
+############ put all this in another file ############
 
 reactions = [   "https://tenor.com/view/snowman-mewing-speech-bubble-discord-mod-gif-8892238637966534022",
                 "https://tenor.com/view/speech-bubble-ishowspeed-scream-gif-25326093",
@@ -59,6 +61,8 @@ reactions = [   "https://tenor.com/view/snowman-mewing-speech-bubble-discord-mod
                 "https://tenor.com/view/dentedhead-speech-bubble-hldmbrnet-gif-25216740",
                 "https://tenor.com/view/among-us-sus-discord-speech-bubble-among-us-discord-speech-bubble-ok-man-gif-7378430653913901797",
                 "https://tenor.com/view/discord-mod-speech-bubble-gif-12034805688750074605"];
+
+############ put all this in a dictionary ############
 
 Haerin = "https://tenor.com/view/haerin-newjeans-newjeans-haerin-haerin-react-kang-haerin-gif-11086638272767305507"
 Chaewon = "https://tenor.com/view/chaewon-le-sserafim-kpop-pretty-gif-4861479788048137214"

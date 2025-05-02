@@ -88,18 +88,31 @@ async def chabeb(ctx):
     await ctx.send('🐈🚪')
     await ctx.channel.last_message.add_reaction('🐈')
     await ctx.channel.last_message.add_reaction('🚪')
+    
+
+@bot.command(name="purge")
+async def purge(ctx, number: int, *authors: discord.Member):
+    """
+    Purges the last `number` messages. If authors are specified, only deletes messages from them.
+    """
+    def check(msg):
+        return (not authors) or (msg.author in authors)
+
+    deleted = await ctx.channel.purge(limit=number+1, check=check)
+    await ctx.send(f"🧹 Deleted {len(deleted)} messages.", delete_after=3)
 
 # -------------------- Future - Commands -------------------- #
 """
-def purge(ctx, numberOfMessage, Author...)
+
+de NWordCounter();
 
 def mockingLeBotDeJeffPuisDeleteSonLastMessage(message) MoCkInG jEFf BoT aNd Matteo
 
 def russianRoulette
+
+def sendNinoStickers()
+
 """
-
-
-
 # -------------------- Main -------------------- #
 def main():
     keep_alive()

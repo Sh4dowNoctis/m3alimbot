@@ -8,5 +8,5 @@ desktop.ini
 *.pyd
 .Python
 env/
-venv/
+.venv/
 *render.py
