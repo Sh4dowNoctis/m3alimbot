@@ -95,11 +95,15 @@ async def purge(ctx, number: int, *authors: discord.Member):
     """
     Purges the last `number` messages. If authors are specified, only deletes messages from them.
     """
+
+    if number > 50:
+        return
+
     def check(msg):
         return (not authors) or (msg.author in authors)
 
     deleted = await ctx.channel.purge(limit=number+1, check=check)
-    await ctx.send(f"🧹 Deleted {len(deleted)} messages.", delete_after=3)
+    await ctx.send(f"🧹 Deleted {len(deleted)-1} messages.", delete_after=3)
 
 # -------------------- Future - Commands -------------------- #
 """
