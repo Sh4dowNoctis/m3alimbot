@@ -14,7 +14,8 @@ from db.db import init_db, increment_word, get_word_count
 # -------------------- My imports -------------------- #
 from messages import goofyAnswers, jeffReaction, matteoReaction,  yaraAndLeaReaction, ramiReaction, myReaction
 from keep_alive import keep_alive
-from ids import *
+from helper.ids import *
+from helper.functions import *
 
 # -------------------- Clean Shutdown -------------------- #
 
@@ -81,27 +82,24 @@ async def on_message(message: Message):
     print(f'[{channel}] {username} "{username}"')
 
     await goofyAnswers(user_message.lower(), message)
-
-
-    nigga_words = [ "nigger", "niggers", "niggi", "nigg", "niga", "nga", "nick gurr", "nyaka" ]
     
-    if user_message.lower().endswith("ni"):
-        count = increment_word("nigga")
-        await message.channel.send(f"📈 The word nigga w l'chabibet has now been said {count} times!", delete_after=3)
-        
-    for word in nigga_words:
-        pattern = r"\b" + re.escape(word) + r"\b"
-        if re.search(pattern, user_message, re.IGNORECASE) and "m3alim" not in user_message:
-            count = increment_word("nigga")
-            await message.channel.send(f"📈 The word nigga w l'chabibet has now been said {count} times!", delete_after=3)
+    guild: discord.guild = bot.get_guild(nino_server_id)
 
-    tracked_words = ["haerin", "chaewon", "chabeb", "based", "cho", "nigga"]
-    for word in tracked_words:
-        pattern = r"\b" + re.escape(word) + r"\b"
-        if re.search(pattern, user_message, re.IGNORECASE) and "m3alim" not in user_message:
-            count = increment_word(word)
-            await message.channel.send(f"📈 The word {word} has now been said {count} times!", delete_after=3)
-    
+    if not guild:
+        await ctx.send("❌ Bot is not in that guild or guild ID is wrong.")
+        return
+
+    nino_sticker = await guild.fetch_sticker(nino_sticker_id)
+    await message.channel.send(stickers=[nino_sticker])
+
+    await word_counter(message)
+
+
+@bot.event
+async def on_voice_state_update(member: discord.member, before: discord.VoiceState, after: discord.VoiceState):
+    if before.channel == None and after.channel.id == fobarNation_channel_id and len(after.channel.members) > 3:
+        list_of_members = after.channel.members
+        await random.choice(list_of_members).move_to(None)
 
 
 # -------------------- Commands -------------------- #
@@ -137,17 +135,14 @@ async def counter(ctx: commands.context.Context, word):
         count = get_word_count(word)
         
     await ctx.channel.send(f"📈 The word {word} has now been said {count} times!", delete_after=5)
+    
 
 # -------------------- Future - Commands -------------------- #
 """
 
-de NWordCounter();
-
 def mockingLeBotDeJeffPuisDeleteSonLastMessage(message) MoCkInG jEFf BoT aNd Matteo
 
 def russianRoulette
-
-def sendNinoStickers()
 
 """
 # -------------------- Main -------------------- #

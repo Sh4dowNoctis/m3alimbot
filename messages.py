@@ -2,7 +2,8 @@ import asyncio
 import random
 import discord
 from discord import Message
-from ids import m3alim_bob_id
+from helper.ids import *
+from helper.links import *
 
 
 def goofyAnswers(user_message_lower: str, message):
@@ -53,43 +54,27 @@ def goofyAnswers(user_message_lower: str, message):
     else:
         return asyncio.sleep(0)
     
-############ put all this in another file ############
-
-reactions = [   "https://tenor.com/view/snowman-mewing-speech-bubble-discord-mod-gif-8892238637966534022",
-                "https://tenor.com/view/speech-bubble-ishowspeed-scream-gif-25326093",
-                "https://tenor.com/view/dentedhead-speech-bubble-hldmbrnet-gif-25216740",
-                "https://tenor.com/view/dentedhead-speech-bubble-hldmbrnet-gif-25216740",
-                "https://tenor.com/view/among-us-sus-discord-speech-bubble-among-us-discord-speech-bubble-ok-man-gif-7378430653913901797",
-                "https://tenor.com/view/discord-mod-speech-bubble-gif-12034805688750074605"];
-
-############ put all this in a dictionary ############
-
-Haerin = "https://tenor.com/view/haerin-newjeans-newjeans-haerin-haerin-react-kang-haerin-gif-11086638272767305507"
-Chaewon = "https://tenor.com/view/chaewon-le-sserafim-kpop-pretty-gif-4861479788048137214"
-kidLooking = "https://tenor.com/view/awkward-look-away-gif-5084935"
-magesty = "https://tenor.com/view/kneel-down-my-queen-your-majesty-gif-17663021"
-getthisN = "https://cdn.discordapp.com/attachments/576672116561281034/1358634299129331722/getthisniggaout.gif"
 
 # Jifo Haerin gif + goofy ahh gifs
 async def jeffReaction(message):
-        if (message.content == getthisN):
+        if (message.content == reactions_people["getthisN"]):
             await message.channel.send("nuh uh")
         if ("haerin" in message.content.lower()):
-            await message.channel.send(kidLooking)
+            await message.channel.send(reactions_people["kidLooking"])
         else:
             if random.random() < 0.05:
-                await message.channel.send(Haerin)
+                await message.channel.send(reactions_people["Haerin"])
             elif random.random() < 0.25:
-                await message.channel.send(random.choice(reactions))
+                await message.channel.send(random.choice(reactions_gifs))
 
 
 # Matteo Chaewon gif
 async def matteoReaction(message):
     if ("chaewon" in message.content.lower()):
-        await message.channel.send(kidLooking)
+        await message.channel.send(reactions_people["kidLooking"])
     else:
         if random.random() < 0.05:
-            await message.channel.send(Chaewon)
+            await message.channel.send(reactions_people["Chaewon"])
 
 # Yara et Lea emoji and gif reaction
 async def yaraAndLeaReaction(message):
@@ -102,7 +87,7 @@ async def yaraAndLeaReaction(message):
                 await message.add_reaction(emoji)
 
     if random.random() < 0.05:
-        await message.channel.send(magesty)
+        await message.channel.send(reactions_people["magesty"])
 
 async def ramiReaction(message):
     if random.random() < 0.35:
