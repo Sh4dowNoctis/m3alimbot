@@ -10,3 +10,4 @@ desktop.ini
 env/
 .venv/
 *render.py
+check_db.py

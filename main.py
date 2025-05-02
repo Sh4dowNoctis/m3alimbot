@@ -9,6 +9,7 @@ import discord
 from discord import Intents, Client, Message
 from discord.ext import commands
 from dotenv import load_dotenv
+from db import init_db, increment_word
 # -------------------- My imports -------------------- #
 from messages import goofyAnswers, jeffReaction, matteoReaction,  yaraAndLeaReaction, ramiReaction, myReaction
 from keep_alive import keep_alive
@@ -27,6 +28,7 @@ signal.signal(signal.SIGTERM, handle_shutdown)
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
+init_db()
 
 intents = Intents.default()
 intents.message_content = True
@@ -78,6 +80,24 @@ async def on_message(message: Message):
     print(f'[{channel}] {username} "{username}"')
 
     await goofyAnswers(user_message.lower(), message)
+
+
+    nigga_words = ["nigga", "nigger", "niggers", "niggi", "nigg", "niga", "nga", "nick gurr", "nyaka" ]
+    
+    if user_message.lower().endswith("ni"):
+        count = increment_word("nigga")
+        await message.channel.send(f"📈 The word nigga w l'chabibet has now been said {count} times!")
+        
+    for word in nigga_words:
+        if word in user_message.lower():
+            count = increment_word("nigga")
+            await message.channel.send(f"📈 The word nigga w l'chabibet has now been said {count} times!")
+
+    tracked_words = ["haerin", "chaewon", "chabeb", "based", "cho"]
+    for word in tracked_words:
+        if word in user_message.lower():
+            count = increment_word(word)
+            await message.channel.send(f"📈 The word '{word}' has now been said {count} times!")
     
 
 
