@@ -12,10 +12,10 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from db.db import init_db, increment_word, get_word_count
 # -------------------- My imports -------------------- #
-from messages import goofyAnswers, jeffReaction, matteoReaction,  yaraAndLeaReaction, ramiReaction, myReaction
-from keep_alive import keep_alive
-from helper.ids import *
 from helper.functions import *
+from helper.messages import *
+from helper.ids import *
+from keep_alive import keep_alive
 
 # -------------------- Clean Shutdown -------------------- #
 
@@ -53,52 +53,25 @@ async def on_ready():
 
 @bot.event
 async def on_message(message: Message):
+    
+    # --------------- Setup --------------- #
+    # Ignore self
+    if message.author == bot.user or message.guild.id == squad_server_id:
+        return
     # Always allow commands to be processed
     await bot.process_commands(message)
-
-    # Ignore self
-    if message.author == bot.user:
-        return
+    # Log User
+    log_user(message)
     
 
-    # User-specific reactions
-    if message.author.id == jeff_id:
-        await jeffReaction(message)
+    # --------------- Features --------------- #
+    await user_specific_reactions(message) # Reacts depending on what the people type
 
-    if message.author.id == matteo_id:
-        await matteoReaction(message);
+    await nino(message, bot) # literally just sends a nino sticker
 
-    if message.author.id in [yara_id, lea_id]:
-        await yaraAndLeaReaction(message)
-
-    if message.author.id == rami_id:
-        await ramiReaction(message)
-
-    if message.author.id == my_id:
-        await myReaction(message)
-
-
-    username = str(message.author)
-    user_message: str = message.content
-    channel = str(message.channel)
-
-    print(f'[{channel}] {username} "{username}"')
-
+    await goofyAnswers(message.content.lower(), message) # Cho Colat
     
-    if message.content == "nino":
-        guild: discord.guild = bot.get_guild(nino_server_id)
-
-        if not guild:
-            await ctx.send("❌ Bot is not in that guild or guild ID is wrong.")
-            return
-
-        nino_sticker = await guild.fetch_sticker(nino_sticker_id)
-        await message.channel.send(stickers=[nino_sticker])
-
-
-
-    await goofyAnswers(user_message.lower(), message)
-    await word_counter(message)
+    await word_counter(message) # tracked_words = ["haerin", "chaewon", "chabeb", "based", "cho", "nigga"]
 
 
 @bot.event
@@ -107,7 +80,7 @@ async def on_voice_state_update(member: discord.member, before: discord.VoiceSta
         return
     if after.channel.id == russian_roullette_channel_id and len(after.channel.members) > russian_roulette_limit:
         list_of_members = after.channel.members
-        await random.choice(list_of_members).move_to(None)
+        await random.choice(list_of_members).move_to(fobar_nation_id)
 
 
 # -------------------- Commands -------------------- #
@@ -139,16 +112,17 @@ async def purge(ctx, number: int, *authors: discord.Member):
 @bot.command(name="counter")
 async def counter(ctx: commands.context.Context, word):
     """
-    Gives the counter of the specified word ["haerin", "chaewon", "chabeb", "based", "cho", "nigga"]
+    Gives the counter of the specified word ["haerin", "chaewon", "chabeb", "based", "cho", "nigga", "fobar"]
     """
     if not word:
         return
     
-    tracked_words = ["haerin", "chaewon", "chabeb", "based", "cho", "nigga"]
+    tracked_words = ["haerin", "chaewon", "chabeb", "based", "cho", "nigga", "fobar"]
     if word in tracked_words:
         count = get_word_count(word)
         
     await ctx.channel.send(f"📈 The word {word} has now been said {count} times!", delete_after=5)
+    
     
 @bot.command()
 async def roulette(ctx, value: int):

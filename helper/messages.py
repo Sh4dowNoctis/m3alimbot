@@ -3,7 +3,7 @@ import random
 import discord
 from discord import Message
 from helper.ids import *
-from helper.links import *
+from helper.lists import *
 
 
 def goofyAnswers(user_message_lower: str, message):
@@ -77,10 +77,10 @@ async def matteoReaction(message):
             await message.channel.send(reactions_people["Chaewon"])
 
 # Yara et Lea emoji and gif reaction
-async def yaraAndLeaReaction(message):
+async def yaraReaction(message):
     if random.random() < 0.5:
-            emojis = ['💀', '🤡', '👑', '🫦']
-            weights = [85, 10, 4.9, 0.1]
+            emojis = ['💀','👑', '🫦']
+            weights = [90, 9.9, 0.1]
             chosen_emojis = random.choices(emojis, weights=weights, k=1)
 
             for emoji in chosen_emojis:
@@ -89,9 +89,9 @@ async def yaraAndLeaReaction(message):
     if random.random() < 0.05:
         await message.channel.send(reactions_people["magesty"])
 
-async def ramiReaction(message):
-    if random.random() < 0.35:
-        await message.channel.send("beh ich")
+# async def ramiReaction(message):
+#     if random.random() < 0.35:
+#         await message.channel.send("beh ich")
 
 async def myReaction(message: Message):
     if message.content.lower().startswith("cha"):

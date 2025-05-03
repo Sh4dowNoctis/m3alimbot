@@ -12,3 +12,28 @@ reactions_gifs = [  "https://tenor.com/view/snowman-mewing-speech-bubble-discord
                     "https://tenor.com/view/dentedhead-speech-bubble-hldmbrnet-gif-25216740",
                     "https://tenor.com/view/among-us-sus-discord-speech-bubble-among-us-discord-speech-bubble-ok-man-gif-7378430653913901797",
                     "https://tenor.com/view/discord-mod-speech-bubble-gif-12034805688750074605"];
+
+milestone_levels = [
+    ("🐣", "Freshly hatched!"),
+    ("🧠", "Smart!"),
+    ("😎", "Cool move."),
+    ("🔥", "Heating up!"),
+    ("🦾", "Strong like iron."),
+    ("🎯", "Bullseye."),
+    ("📈", "Climbing fast!"),
+    ("💎", "Certified rare."),
+    ("🎩", "Top hat elegance."),
+    ("⚔️", "Warrior vibes."),
+    ("👑", "Crowned champion."),
+    ("🪩", "Disco god."),
+    ("🚀", "Blasting off!"),
+    ("🌟", "You're a star."),
+    ("💫", "Celestial energy."),
+    ("🦄", "Mythical milestone."),
+    ("🧙", "Wizard tier."),
+    ("🐉", "Dragoncore."),
+    ("🛸", "Otherworldly."),
+    ("🥇", "You've peaked."),
+    ("🫃", "We pregnant."),
+    ("🥷", "You're a ni(nja)gger")
+]
