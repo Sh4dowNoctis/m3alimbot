@@ -112,6 +112,9 @@ async def on_voice_state_update(member: discord.member, before: discord.VoiceSta
 
 @bot.command(name="chabeb")
 async def chabeb(ctx):
+    """
+    Sends 🐈🚪
+    """
     await ctx.send('🐈🚪')
     await ctx.channel.last_message.add_reaction('🐈')
     await ctx.channel.last_message.add_reaction('🚪')
@@ -133,6 +136,9 @@ async def purge(ctx, number: int, *authors: discord.Member):
     
 @bot.command(name="counter")
 async def counter(ctx: commands.context.Context, word):
+    """
+    Gives the counter of the specified word ["haerin", "chaewon", "chabeb", "based", "cho", "nigga"]
+    """
     if not word:
         return
     
@@ -144,12 +150,18 @@ async def counter(ctx: commands.context.Context, word):
     
 @bot.command()
 async def roulette(ctx, value: int):
+    """
+    Set roulette variable to the value
+    """
     global russian_roulette_limit
     russian_roulette_limit = value
     await ctx.send(f"✅ Variable set to {russian_roulette_limit}", delete_after=3)
 
 @bot.command()
 async def check(ctx):
+    """
+    Shows current roulette variable
+    """ 
     await ctx.send(f"📦 Current value: {russian_roulette_limit}")
 
 # -------------------- Future - Commands -------------------- #
