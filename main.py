@@ -105,7 +105,7 @@ async def on_message(message: Message):
 async def on_voice_state_update(member: discord.member, before: discord.VoiceState, after: discord.VoiceState):
     if after.channel == None:
         return
-    if after.channel.id == fobarNation_channel_id and len(after.channel.members) > russian_roulette_limit:
+    if after.channel.id == russian_roullette_channel_id and len(after.channel.members) > russian_roulette_limit:
         list_of_members = after.channel.members
         await random.choice(list_of_members).move_to(None)
 

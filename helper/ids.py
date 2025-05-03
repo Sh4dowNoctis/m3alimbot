@@ -12,5 +12,5 @@ nino_server_id = 522058683769815051
 
 nino_sticker_id = 935316395426713630
 
-fobarNation_channel_id = 1317978701127880775
+russian_roullette_channel_id = 1368036177893920838
 test_channel_id = 903949230190772254
