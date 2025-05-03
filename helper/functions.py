@@ -17,14 +17,14 @@ async def search_increment_word(message: Message, wordInList: str, word: str):
     if re.search(pattern, message.content, re.IGNORECASE) and "m3alim" not in message.content:
         count = increment_word(word)
         await message.channel.send(f"📈 The word **{word}** has now been said {count} times!", delete_after=3)
-        emoji_milestone(message, count, word)
+        await emoji_milestone(message, count, word)
         
 async def word_counter(message: Message):
     if message.content.lower().endswith("ni"):
         word = "nigga"
         count = increment_word(word)
         await message.channel.send(f"📈 The word **{word}** has now been said {count} times!", delete_after=3)
-        emoji_milestone(message, count, word)
+        await emoji_milestone(message, count, word)
     
     nigga_words = [ "nigger", "niggers", "niggi", "nigg", "niga", "nga", "nick gurr", "nyaka" ]
     for word in nigga_words:
