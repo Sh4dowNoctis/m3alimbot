@@ -26,6 +26,9 @@ def handle_shutdown(sig, frame):
 signal.signal(signal.SIGINT, handle_shutdown)
 signal.signal(signal.SIGTERM, handle_shutdown)
 
+# -------------------- Global Variable -------------------- #
+russian_roulette_limit = 5
+
 # -------------------- Startup -------------------- #
 
 load_dotenv()
@@ -81,23 +84,26 @@ async def on_message(message: Message):
 
     print(f'[{channel}] {username} "{username}"')
 
-    await goofyAnswers(user_message.lower(), message)
     
-    guild: discord.guild = bot.get_guild(nino_server_id)
+    if message.content == "nino":
+        guild: discord.guild = bot.get_guild(nino_server_id)
 
-    if not guild:
-        await ctx.send("❌ Bot is not in that guild or guild ID is wrong.")
-        return
+        if not guild:
+            await ctx.send("❌ Bot is not in that guild or guild ID is wrong.")
+            return
 
-    nino_sticker = await guild.fetch_sticker(nino_sticker_id)
-    await message.channel.send(stickers=[nino_sticker])
+        nino_sticker = await guild.fetch_sticker(nino_sticker_id)
+        await message.channel.send(stickers=[nino_sticker])
 
+
+
+    await goofyAnswers(user_message.lower(), message)
     await word_counter(message)
 
 
 @bot.event
 async def on_voice_state_update(member: discord.member, before: discord.VoiceState, after: discord.VoiceState):
-    if before.channel == None and after.channel.id == fobarNation_channel_id and len(after.channel.members) > 3:
+    if after.channel.id == fobarNation_channel_id and len(after.channel.members) > russian_roulette_limit:
         list_of_members = after.channel.members
         await random.choice(list_of_members).move_to(None)
 
@@ -136,13 +142,20 @@ async def counter(ctx: commands.context.Context, word):
         
     await ctx.channel.send(f"📈 The word {word} has now been said {count} times!", delete_after=5)
     
+@bot.command()
+async def roulette(ctx, value: int):
+    global russian_roulette_limit
+    russian_roulette_limit = value
+    await ctx.send(f"✅ Variable set to {russian_roulette_limit}", delete_after=3)
+
+@bot.command()
+async def check(ctx):
+    await ctx.send(f"📦 Current value: {russian_roulette_limit}")
 
 # -------------------- Future - Commands -------------------- #
 """
 
 def mockingLeBotDeJeffPuisDeleteSonLastMessage(message) MoCkInG jEFf BoT aNd Matteo
-
-def russianRoulette
 
 """
 # -------------------- Main -------------------- #
