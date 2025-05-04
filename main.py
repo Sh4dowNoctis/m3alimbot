@@ -19,17 +19,33 @@ from helper.ids import *
 from keep_alive import keep_alive
 from components.buttons import *
 
-# -------------------- Clean Shutdown -------------------- #
+# -------------------- Global Variable -------------------- #
+
+russian_roulette_limit = 5
+INSTANCE_ID = random.randint(1000, 9999)
+
+# -------------------- Handle Shutdown -------------------- #
+
+# Shutdown logging
+async def graceful_shutdown():
+    embed = discord.Embed(
+        title=f"{ENV_LABEL} Bot Shutdown",
+        description=f"🔴 Instance `{INSTANCE_ID}` is shutting down.",
+        color=discord.Color.red()
+    )
+
+    for channel_id in [log_channel_nino_id, log_channel_chabeb_id]:
+        channel = bot.get_channel(channel_id)
+        if channel:
+            await channel.send(embed=embed)
+
+    await bot.close()
 
 def handle_shutdown(sig, frame):
-    print("🛑 Shutdown signal received.")
-    bot.loop.create_task(bot.close())  # Let the bot exit gracefully
+    bot.loop.create_task(graceful_shutdown())
 
 signal.signal(signal.SIGINT, handle_shutdown)
 signal.signal(signal.SIGTERM, handle_shutdown)
-
-# -------------------- Global Variable -------------------- #
-russian_roulette_limit = 5
 
 # -------------------- Startup -------------------- #
 
@@ -42,13 +58,23 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="m3alim ", intents=intents)
 
+
+ENV_LABEL = "DEV" if os.getenv("LOCAL_DEV") == "1" else "PROD"
+
 @bot.event
 async def on_ready():
-    id = random.randint(1000, 9999)
-    print(f"Bot started [ID: {id}] as {bot.user}")
-    channel = bot.get_channel(log_channel_id)
-    if channel:
-        await channel.send(f"🟢 Bot instance `{id}` started as **{bot.user}**")
+    print(f"Bot [{ENV_LABEL}] started [ID: {INSTANCE_ID}] as {bot.user}")
+
+    embed = discord.Embed(
+        title=f"{ENV_LABEL} Bot Started",
+        description=f"🟢 Instance `{INSTANCE_ID}` launched as **{bot.user}**",
+        color=discord.Color.green()
+    )
+
+    for channel_id in [log_channel_nino_id, log_channel_chabeb_id]:
+        channel = bot.get_channel(channel_id)
+        if channel:
+            await channel.send(embed=embed)
     
 
 # -------------------- Events -------------------- #
