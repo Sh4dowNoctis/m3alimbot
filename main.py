@@ -12,10 +12,12 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from db.db import init_db, increment_word, get_word_count
 # -------------------- My imports -------------------- #
+import discord.ext
 from helper.functions import *
 from helper.messages import *
 from helper.ids import *
 from keep_alive import keep_alive
+from components.buttons import *
 
 # -------------------- Clean Shutdown -------------------- #
 
@@ -96,18 +98,31 @@ async def chabeb(ctx):
     
 
 @bot.command(name="purge")
-async def purge(ctx, number: int, *authors: discord.Member):
+async def purge(ctx: commands.context.Context, number: int, *authors: discord.Member):
     """
     Purges the last `number` messages. If authors are specified, only deletes messages from them.
     """
     if number > 50:
+        await ctx.send("❌ Limit is 50 messages.", delete_after=3)
         return
 
     def check(msg):
         return (not authors) or (msg.author in authors)
+    
+    messages = [message async for message in ctx.channel.history(limit=number+1)]
+    filtered = list(filter(check, messages))
 
-    deleted = await ctx.channel.purge(limit=number+1, check=check)
-    await ctx.send(f"🧹 Deleted {len(deleted)-1} messages.", delete_after=3)
+    if not filtered:
+        await ctx.send("No messages matched.", delete_after=3)
+        return
+
+    target_msg = filtered[-1]
+    view = ConfirmPurgeView(ctx, filtered)
+    await ctx.send(
+        f"Delete messages until:\n**{target_msg.author.display_name}:** {target_msg.content}",
+        view=view,
+        delete_after=10
+    )
     
 @bot.command(name="counter")
 async def counter(ctx: commands.context.Context, word):
@@ -124,7 +139,7 @@ async def counter(ctx: commands.context.Context, word):
     await ctx.channel.send(f"📈 The word {word} has now been said {count} times!", delete_after=5)
     
     
-@bot.command()
+@bot.command(name="roulette")
 async def roulette(ctx, value: int):
     """
     Set roulette variable to the value
@@ -133,7 +148,7 @@ async def roulette(ctx, value: int):
     russian_roulette_limit = value
     await ctx.send(f"✅ Variable set to {russian_roulette_limit}", delete_after=3)
 
-@bot.command()
+@bot.command(name="check")
 async def check(ctx):
     """
     Shows current roulette variable
