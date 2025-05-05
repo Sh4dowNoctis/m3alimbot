@@ -23,6 +23,7 @@ from components.buttons import *
 
 russian_roulette_limit = 5
 INSTANCE_ID = random.randint(1000, 9999)
+FFMPEG_PATH = "./bin/ffmpeg.exe"
 
 # -------------------- Handle Shutdown -------------------- #
 
@@ -108,7 +109,7 @@ async def on_voice_state_update(member: discord.member, before: discord.VoiceSta
         return
     if after.channel.id == russian_roullette_channel_id and len(after.channel.members) > russian_roulette_limit:
         list_of_members = after.channel.members
-        await random.choice(list_of_members).move_to(fobar_nation_id)
+        await random.choice(list_of_members).move_to(bot.get_channel(fobar_nation_id))
 
 
 # -------------------- Commands -------------------- #
