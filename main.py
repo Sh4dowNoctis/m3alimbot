@@ -23,7 +23,6 @@ from components.buttons import *
 
 russian_roulette_limit = 5
 INSTANCE_ID = random.randint(1000, 9999)
-FFMPEG_PATH = "./bin/ffmpeg.exe"
 
 # -------------------- Handle Shutdown -------------------- #
 
@@ -184,6 +183,7 @@ async def check(ctx):
 
 # -------------------- Future - Commands -------------------- #
 """
+def music Bot got post poned
 
 def mockingLeBotDeJeffPuisDeleteSonLastMessage(message) MoCkInG jEFf BoT aNd Matteo
 

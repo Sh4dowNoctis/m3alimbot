@@ -12,3 +12,4 @@ env/
 *render.py
 check_db.py
 trash_db.py
+music_folder

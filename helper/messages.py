@@ -64,7 +64,7 @@ async def jeffReaction(message):
         else:
             if random.random() < 0.05:
                 await message.channel.send(reactions_people["Haerin"])
-            elif random.random() < 0.25:
+            elif random.random() < 0.10:
                 await message.channel.send(random.choice(reactions_gifs))
 
 
