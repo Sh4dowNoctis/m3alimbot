@@ -49,6 +49,9 @@ async def user_specific_reactions(message: Message):
 
     # if message.author.id == rami_id:
     #     await ramiReaction(message)
+    
+    if message.author.id == patate_id:
+        await patateReaction(message)
 
     if message.author.id == my_id:
         await myReaction(message)

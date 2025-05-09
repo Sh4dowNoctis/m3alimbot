@@ -93,6 +93,10 @@ async def yaraReaction(message):
 #     if random.random() < 0.35:
 #         await message.channel.send("beh ich")
 
+async def patateReaction(message):
+    mesi_sticker = await message.guild.fetch_sticker(mesi_sticker_id)
+    await message.channel.send(stickers=[mesi_sticker])
+
 async def myReaction(message: Message):
     if message.content.lower().startswith("cha"):
         await message.add_reaction('🐈')
