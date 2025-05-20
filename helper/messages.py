@@ -78,9 +78,9 @@ async def matteoReaction(message):
 
 # Yara et Lea emoji and gif reaction
 async def yaraReaction(message):
-    if random.random() < 0.5:
-            emojis = ['💀','👑', '🫦']
-            weights = [90, 9.9, 0.1]
+    if random.random() < 0.3:
+            emojis = ['👑', '🫦']
+            weights = [99.9, 0.1]
             chosen_emojis = random.choices(emojis, weights=weights, k=1)
 
             for emoji in chosen_emojis:

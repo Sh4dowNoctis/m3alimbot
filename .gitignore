@@ -9,6 +9,7 @@ desktop.ini
 .Python
 env/
 .venv/
+venv/
 *render.py
 check_db.py
 trash_db.py
