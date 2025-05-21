@@ -2,10 +2,7 @@
 import os
 import random
 import asyncio
-import requests
 import signal
-import sys
-import re
 from mutagen.mp3 import MP3
 import discord
 from discord import Intents, Client, Message
