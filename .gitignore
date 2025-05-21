@@ -14,3 +14,4 @@ venv/
 check_db.py
 trash_db.py
 music_folder
+ffmpeg.exe

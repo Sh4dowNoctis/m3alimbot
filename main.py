@@ -109,7 +109,7 @@ async def on_voice_state_update(member: discord.Member, before: discord.VoiceSta
         list_of_members = after.channel.members
         await random.choice(list_of_members).move_to(bot.get_channel(fobar_nation_id))
         
-    if after.channel and member.id == my_id:
+    if after.channel and before.channel == None and member.id == my_id:
         voice_client = await after.channel.connect()
         voice_clients[after.channel.guild.id] = voice_client  # store it
         file_path = f"./sounds/bbbwyby.mp3"
