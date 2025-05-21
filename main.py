@@ -21,7 +21,7 @@ from components.buttons import *
 
 russian_roulette_limit = 5
 INSTANCE_ID = random.randint(1000, 9999)
-FFMPEG_PATH = "./bin/ffmpeg"
+FFMPEG_PATH = "ffmpeg"
 
 # -------------------- Handle Shutdown -------------------- #
 
