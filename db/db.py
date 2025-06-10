@@ -16,10 +16,12 @@ def init_db():
                 word TEXT PRIMARY KEY,
                 count INTEGER NOT NULL
             )
+        """)
+        cur.execute("""
             CREATE TABLE IF NOT EXISTS pull_counts (
                 name TEXT PRIMARY KEY,
                 count INTEGER NOT NULL DEFAULT 0
-            );
+            )
         """)
 
 def increment_word(word: str) -> int:
