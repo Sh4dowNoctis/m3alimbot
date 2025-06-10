@@ -63,13 +63,3 @@ def log_user(message: Message):
 
     print(f'[{channel}] {username} "{username}"')
     
-async def nino(message: Message, bot):
-    if message.content == "nino":
-        guild: discord.guild = bot.get_guild(nino_server_id)
-
-        if not guild:
-            await message.channel.send("❌ Bot is not in that guild or guild ID is wrong.")
-            return
-
-        nino_sticker = await guild.fetch_sticker(nino_sticker_id)
-        await message.channel.send(stickers=[nino_sticker])

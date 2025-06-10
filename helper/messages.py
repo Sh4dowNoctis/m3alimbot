@@ -4,6 +4,8 @@ import discord
 from discord import Message
 from helper.ids import *
 from helper.lists import *
+from helper.globals import *
+from db.db import *
 
 
 def goofyAnswers(user_message_lower: str, message):
@@ -57,15 +59,28 @@ def goofyAnswers(user_message_lower: str, message):
 
 # Jifo Haerin gif + goofy ahh gifs
 async def jeffReaction(message):
-        if (message.content == reactions_people["getthisN"]):
-            await message.channel.send("nuh uh")
-        if ("haerin" in message.content.lower()):
-            await message.channel.send(reactions_people["kidLooking"])
-        else:
-            if random.random() < 0.05:
-                await message.channel.send(reactions_people["Haerin"])
-            elif random.random() < 0.10:
-                await message.channel.send(random.choice(reactions_gifs))
+    if (message.content == reactions_people["getthisN"]):
+        await message.channel.send("nuh uh")
+    if ("haerin" in message.content.lower()):
+        await message.channel.send(reactions_people["kidLooking"])
+    else:
+        if random.random() < matteo_jeff_pull_rate:
+            matteo_jeff_pull_rate = 0.0005
+            increment_pull("jeff")
+            pulls = get_pull("jeff")
+            await message.channel.send(f"🎯 Jeff pulled! He is now at {pulls} pulls.")
+            
+            if pulls >= 10:
+                reset_pulls()
+                await message.channel.send("🏆 Jeff won! He can now change Matteo’s pull!")
+                
+                
+            await message.channel.send(reactions_people["Haerin"])
+            
+            
+        elif random.random() < 0.01:
+            await message.channel.send(random.choice(reactions_gifs))
+    matteo_jeff_pull_rate += 0.0005
 
 
 # Matteo Chaewon gif
@@ -73,8 +88,19 @@ async def matteoReaction(message):
     if ("chaewon" in message.content.lower()):
         await message.channel.send(reactions_people["kidLooking"])
     else:
-        if random.random() < 0.05:
+        if random.random() < matteo_jeff_pull_rate:
+            matteo_jeff_pull_rate = 0.0005
+            increment_pull("matteo")
+            pulls = get_pull("matteo")
+            await message.channel.send(f"🎯 Matteo pulled! He is now at {pulls} pulls.")
+            
+            if pulls >= 10:
+                reset_pulls()
+                await message.channel.send("🏆 Matteo won! He can now change Jeff’s pull!")
+                
+                
             await message.channel.send(reactions_people["Chaewon"])
+    matteo_jeff_pull_rate += 0.0005
 
 # Yara et Lea emoji and gif reaction
 async def yaraReaction(message):
@@ -86,7 +112,7 @@ async def yaraReaction(message):
             for emoji in chosen_emojis:
                 await message.add_reaction(emoji)
 
-    if random.random() < 0.05:
+    if random.random() < 0.01:
         await message.channel.send(reactions_people["magesty"])
 
 # async def ramiReaction(message):

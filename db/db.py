@@ -16,6 +16,10 @@ def init_db():
                 word TEXT PRIMARY KEY,
                 count INTEGER NOT NULL
             )
+            CREATE TABLE IF NOT EXISTS pull_counts (
+                name TEXT PRIMARY KEY,
+                count INTEGER NOT NULL DEFAULT 0
+            );
         """)
 
 def increment_word(word: str) -> int:
@@ -37,3 +41,17 @@ def get_word_count(word: str) -> int:
         cur.execute("SELECT count FROM word_counts WHERE word = %s", (word,))
         row = cur.fetchone()
         return row[0] if row else 0
+    
+def get_pull(name):
+    with conn:
+        cur.execute("SELECT count FROM pull_counts WHERE name = %s", (name,))
+        result = cur.fetchone()
+        return result[0] if result else 0
+
+def increment_pull(name):
+    with conn:
+        cur.execute("INSERT INTO pull_counts (name, count) VALUES (%s, 1) ON CONFLICT(name) DO UPDATE SET count = pull_counts.count + 1", (name,))
+
+def reset_pulls():
+    with conn:
+        cur.execute("UPDATE pull_counts SET count = 0")

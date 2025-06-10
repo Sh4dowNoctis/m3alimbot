@@ -94,8 +94,6 @@ async def on_message(message: Message):
     # --------------- Features --------------- #
     await user_specific_reactions(message) # Reacts depending on what the people type
 
-    await nino(message, bot) # literally just sends a nino sticker
-
     await goofyAnswers(message.content.lower(), message) # Cho Colat
     
     await word_counter(message) # tracked_words = ["haerin", "chaewon", "chabeb", "based", "cho", "nigga"]
